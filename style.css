@@ -31,9 +31,105 @@ body {
     min-height: 14rem;
 
 }
+
 .card-title{
     margin-bottom: 0.5rem !important;
     position: absolute;
     bottom: 0rem;
     left: 1rem;
 }
+
+.card img{
+    max-height: 10rem;
+}
+
+
+
+#menu{
+    background-color: var(--apple);
+    
+}
+.container-fluid{
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.button{
+    justify-content: center;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 5px;
+    
+}
+#menu .col-3{
+    -webkit-transition: background-color 0.4s ease-in-out;
+    transition: background-color 0.4s ease-in-out;
+}
+
+#menu .col-3:hover {
+    background-color:lightgray;
+}
+
+
+#background_image{
+    justify-items: center;
+    background-image: url("img/header-foto.jpg");
+    background-size: cover;
+    width: 100vw;
+    margin:0;
+    height:100vh;
+    position: fixed;
+}
+
+
+#teams_container{
+    background-color:rgba(166,195,111,0.8);
+    margin-top:10px;
+    width: 100%;
+    height: auto;
+    max-width: 90%;
+    position: relative;
+}
+#teams_header{
+    justify-content: center;
+    text-align: center;
+    background-color: var(--pistachio);
+    box-shadow: 10px 10px 8px #888888;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 40px;
+    font-weight: bold;
+    margin-top:10px;
+    color: var(--slate-gray); 
+}
+
+#teams .col-sm-12{
+    justify-content: center;
+    text-align: justify;
+    font-family: 'Candara', sans-serif;
+    font-size: 23px;
+    font-weight: 500;
+    padding-top: 30px;;
+}
+
+#teams{
+    display: flexbox;
+    flex-wrap: wrap;
+}
+
+#team_logo{
+    width: auto;
+    height: auto;
+    padding: 10px;
+}
+
+#teams img{
+    height: auto;
+    width: auto;
+    min-height: 150px;
+    max-height: 150px;
+    margin-bottom: 10px;
+    
+}
+
