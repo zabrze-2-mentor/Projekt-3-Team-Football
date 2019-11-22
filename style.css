@@ -4,35 +4,44 @@
     --dark-tan: #828C51;
     --slate-gray: #335145;
     --jungle-green: #1E352F;
-  }
-  body {
-      background-color: var(--apple);
-  }
-  .img-header {
+}
+
+body {
+    background-color: var(--apple);
+}
+
+.img-header {
     height: 100vh;
     /* object-fit: cover; */
     background-image: url("img/header-foto.jpg");
     background-size: cover;
 }
+
 .square {
 
     background-color: var(--pistachio);
 }
-.card-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+
+.card-container .row .col-lg-3 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
+
 .card {
-    flex: 1 0 21%;
-    max-width: 21%;
+    min-height: 14rem;
 
 }
+
+.card-title{
+    margin-bottom: 0.5rem !important;
+    position: absolute;
+    bottom: 0rem;
+    left: 1rem;
+}
+
 .card img{
     max-height: 10rem;
 }
-
-
 
 
 
@@ -123,3 +132,4 @@
     margin-bottom: 10px;
     
 }
+
