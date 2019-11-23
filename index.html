@@ -16,31 +16,48 @@
     <meta charset="UTF-8">
     <!--NASZE SKRYPTY-->
     <script src="lista-lig.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <!-- <div class="img-fluid w-100 img-header">
-        
-    </div> -->
+    <!--NAGLOWEK-->
     <div class="img-container">
-    <h1 class="text-in-img">Football Team</h1>
-    <img src="img/header-foto.jpg" class="img-fluid w-100 img-header">
+        <h1 class="text-in-img">Football Team</h1>
+        <span class="faded"></span>
+        <img src="img/header-foto.jpg" class="img-fluid w-100 img-header">
     </div>
+    <!--LISTA WSZYSTKICH LIG-->
     <div class="container">
-        <h1 class="text-center mt-3">Lista lig</h1>
+        <h1 class="title-text text-center mt-4 mb-3">LISTA LIG:</h1>
         <div class="card-container">
         </div>
     </div>
-    <div class="container-fluid mt-3">
-            <button class="btn">TEST</button>
+    <!--NAJBLIZSZE MECZE-->
+    <div id="bgFluidMatches" class="container-fluid">
+        <div class="container">
+            <h1 class="title-text text-center mt-3 mb-3">NADCHODZĄCE MECZE:</h1>
+            <div class="matches-container">
+                <table style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th id="tblData" colspan="3"></th>
+                        </tr>
+                        <tr>
+                            <th style="width:45%">Home Team</th>
+                            <th style="width:10%">VS</th>
+                            <th style="width:45%">Away Team</th>
+                        </tr>
+                    </thead>
+                    <tbody id="incomingMatchesFP">
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <!-- Footer -->
     <footer class="page-footer font-small blue">
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3">© 2019 Copyright: Football Team
+        <div class="footer text-center py-3">© 2019 Copyright: Football Team
         </div>
-        <!-- Copyright -->
     </footer>
     <!-- Footer -->
     <!--SKRYPTY Z BOOTSTRAP-->
