@@ -1,41 +1,82 @@
 :root {
-    --apple: #BEEF9E;
-    --pistachio: #A6C36F;
-    --dark-tan: #828C51;
-    --slate-gray: #335145;
-    --jungle-green: #1E352F;
+    --apple: rgb(190, 239, 158,1);
+    --pistachio: rgb(166, 195, 111);
+    --dark-tan: rgb(130, 140, 81);
+    --slate-gray: rgb(51, 81, 69);
+    --jungle-green: rgb(30, 53, 47);
 }
 
 body {
     background-color: var(--apple);
     font-size: 1rem;
     font-family: 'Roboto', sans-serif;
+    font-weight: 300;
 }
-.img-container{
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--apple);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: var(--jungle-green);
+}
+
+/* NAGŁÓWEK - OBRAZEK */
+.img-container {
     position: relative;
 }
+.faded{
+    position: absolute;
+    top:90%;
+    height: 10%;
+    width:100%;
+    background-image:  linear-gradient(rgb(0,0,0,0), var(--apple));
+}
+
+
 .text-in-img {
     color: black;
     position: absolute;
     top: 2rem;
     left: 2rem;
-    /* transform: translate(-50%, -50%); */
+
     font-size: 4em;
 }
 
-.square {
-
-    background-color: var(--pistachio);
+/* LISTA LIG  - KARTY, SEKCJA*/
+#bgFluidMatches {
+    padding:1rem;
+background-color:  rgb(212, 240, 194);
 }
-
 .card-container .row .col-lg-3 {
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
 
+.title-text {
+    color: var(--jungle-green);
+}
+
 .card {
     min-height: 14rem;
+}
 
+.card img {
+    transition: transform 1s, filter 0.5s ease-in-out;
+    transform-origin: center center;
+    filter: brightness(80%);
+}
+
+.card:hover img {
+    filter: brightness(100%);
+    transform: scale(1.05);
 }
 
 .card-title {
@@ -44,43 +85,45 @@ body {
     bottom: 0rem;
     width: 100%;
     text-align: center;
-}
-.card-title a {
-    color: var(--slate-gray);
-    text-align: center;
-}
-.text-center {
-    color: var(--jungle-green);
+    color: white;
 }
 
+
 .card-body {
-    background-color: #F7F7F7;
+    background-color: var(--slate-gray);
     padding-bottom: 1.25rem;
     padding-top: 1.25rem;
     padding-left: 0;
     padding-right: 0;
 }
 
-.footer-copyright {
-    background-color: var(--pistachio);
-    color: black;
+/*NADCHODZACE MECZE - strona główna*/
+.matches-container td,
+.matches-container th {
+    text-align: center;
+    font-size: 1.5em
 }
 
-.btn {
-    background-color: var(--pistachio);
-    border: 0.05rem solid var(--dark-tan);
-    border-radius: 1rem;
-    color: var(--slate-gray);
-font-weight: bold;
-    padding: 0.5rem 1rem;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    transition: all 0.5s;
-    cursor: pointer;
-    margin: 5px;
+.matches-container td {
+    font-weight: 300;
+
 }
-.btn:hover {
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+
+.matches-container table {
+
+    border-collapse: separate;
+    border-spacing: 0 1em;
+
+}
+
+.matches-container tr {
+
+    margin-top: 1rem;
+}
+
+/*FOOTER*/
+.footer {
+   
+    background-color: var(--pistachio);
+    color: black;
 }
