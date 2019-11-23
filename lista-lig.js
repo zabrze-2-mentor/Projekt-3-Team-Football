@@ -55,8 +55,8 @@ async function fetchLeagues(plan = "TIER_ONE") {
         cardTitle.classList.add("card-title");
 
 
-
         cardTitle.innerHTML = "<a href='stronaligi.html?id=" + element.id + "'>" + element.name + "</a>";
+
 
         divRow.appendChild(divCol);
         divCol.appendChild(divCard);
