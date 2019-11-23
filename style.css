@@ -11,20 +11,16 @@ body {
     font-size: 1rem;
     font-family: 'Roboto', sans-serif;
 }
-
-.img-header {
-    max-height: 100vh;
-    /* object-fit: cover; */
-    background-image: url("img/header-foto.jpg");
-    background-size: cover;
+.img-container{
+    position: relative;
 }
 .text-in-img {
     color: black;
     position: absolute;
-    top: 60%;
-    left: 76.5%;
-    transform: translate(-50%, -50%);
-    font-size: 3.5rem;
+    top: 2rem;
+    left: 2rem;
+    /* transform: translate(-50%, -50%); */
+    font-size: 4em;
 }
 
 .square {
@@ -46,20 +42,23 @@ body {
     margin-bottom: 0.5rem !important;
     position: absolute;
     bottom: 0rem;
-    left: 1rem;
+    width: 100%;
+    text-align: center;
 }
-
-.text-center {
-    color: var(--jungle-green);
-}
-
 .card-title a {
     color: var(--slate-gray);
     text-align: center;
 }
+.text-center {
+    color: var(--jungle-green);
+}
 
 .card-body {
     background-color: #F7F7F7;
+    padding-bottom: 1.25rem;
+    padding-top: 1.25rem;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .footer-copyright {
