@@ -126,4 +126,117 @@ background-color:  rgb(212, 240, 194);
    
     background-color: var(--pistachio);
     color: black;
+    border: 0.05rem solid var(--dark-tan);
+    border-radius: 1rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+.btn:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+#menu{
+    background-color: var(--pistachio);
+    margin: 0;
+}
+.container-fluid{
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.button{
+    justify-content: center;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 5px;
+    
+}
+#menu .col-3{
+    -webkit-transition: background-color 0.4s ease-in-out;
+    transition: background-color 0.4s ease-in-out;
+}
+
+#menu .col-3:hover {
+    background-color:lightgray;
+}
+
+
+#background_image{
+    justify-items: center;
+    background-image: url("img/header-foto.jpg");
+    background-size: cover;
+    width: 100vw;
+    margin:0;
+    height:100vh;
+    position: fixed;
+}
+
+
+#teams_container{
+    background-color:rgba(166,195,111,0.8);
+    margin-top:10px;
+    width: 100%;
+    height: auto;
+    max-width: 90%;
+    position: relative;
+}
+#teams_header{
+    justify-content: center;
+    text-align: center;
+    background-color: var(--apple);
+    box-shadow: 10px 10px 8px #888888;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 40px;
+    font-weight: bold;
+    margin-top:10px;
+    color: var(--slate-gray); 
+}
+
+#teams .col-sm-12{
+    justify-content: center;
+    text-align: justify;
+    font-family: 'Candara', sans-serif;
+    font-size: 23px;
+    font-weight: 500;
+    padding-top: 30px;;
+}
+
+#teams{
+    display: flexbox;
+    flex-wrap: wrap;
+}
+
+#team_logo{
+    width: 12rem;
+    height: auto;
+    padding: 10px;
+}
+
+#teams img{
+    height: auto;
+    width: auto;
+    max-height: 150px;
+    max-width: 10rem;
+    margin-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+    
+}
+
+#team_logo h5{
+    text-align: center;
+    color: white;
+    font-size: 1.25rem;
+
 }

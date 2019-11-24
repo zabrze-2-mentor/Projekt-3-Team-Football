@@ -14,7 +14,6 @@ fetch(teamsAPI,{
 .then(data => {
 
     const competition = data["competition"];
-    // const leagueName = document.createTextNode();
     const header = document.getElementById("teams_header");
     const p = document.createElement('p');
     p.innerText = competition.name;
@@ -23,18 +22,55 @@ fetch(teamsAPI,{
     const standings = data["standings"];
 
     standings[0].table.forEach(element => {
-        let image = element.team.crestUrl;
         
+        let image = element.team.crestUrl;
+        let name = element.team.name;
+
         const teamsDiv = document.getElementById("teams");
 
         const newDiv = document.createElement('div');
         newDiv.setAttribute('class', 'container');
         newDiv.id = "team_logo";
 
+        const newH5 = document.createElement('h5');
+
         const logo = document.createElement('img');
-        logo.src = image;
-    
-        teamsDiv.appendChild(newDiv).appendChild(logo);
+
+        //Szukanie przypadku, kiedy url loga drużyny jest już niedostępne + logika
+        // function urlExists(url, callback) {
+        //     fetch(url, { method: 'head' })
+        //     .then(function(status) {
+        //       callback(status.ok)
+        //     })
+        //   }
+        //   urlExists(image, function(exists) {
+        //     if (!exists) {
+        //         logo.src = "img/favicon.ico";
+        //         newH5.innerText = name;
+        //         teamsDiv.appendChild(newDiv).appendChild(logo);
+        //         newDiv.appendChild(newH5);
+        //     } else if(image == null) {
+        //         logo.src = "img/favicon.ico";
+        //         newH5.innerText = name;
+        //         teamsDiv.appendChild(newDiv).appendChild(logo);
+        //         newDiv.appendChild(newH5);
+        //     }else{
+        //         logo.src = image;
+        //         teamsDiv.appendChild(newDiv).appendChild(logo);
+        //     }
+        //   });
+        
+        if(image == null){
+            logo.src = "img/favicon.ico";
+            newH5.innerText = name;
+            teamsDiv.appendChild(newDiv).appendChild(logo);
+            newDiv.appendChild(newH5);
+
+        }else{
+            logo.src = image;
+            teamsDiv.appendChild(newDiv).appendChild(logo);
+        }
+        
     });
 })
 .catch(err => {
