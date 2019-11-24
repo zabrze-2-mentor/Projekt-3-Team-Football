@@ -25,6 +25,7 @@ fetch(teamsAPI,{
         
         let image = element.team.crestUrl;
         let name = element.team.name;
+        let id = element.team.id;
 
         const teamsDiv = document.getElementById("teams");
 
@@ -35,6 +36,10 @@ fetch(teamsAPI,{
         const newH5 = document.createElement('h5');
 
         const logo = document.createElement('img');
+
+        logo.addEventListener("click", function () {
+            window.location.href = `stronadruzyny.html#${id}`;
+        });
 
         //Szukanie przypadku, kiedy url loga drużyny jest już niedostępne + logika
         // function urlExists(url, callback) {

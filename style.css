@@ -230,8 +230,14 @@ background-color:  rgb(212, 240, 194);
     margin-bottom: 10px;
     display: block;
     margin-left: auto;
-    margin-right: auto
-    
+    margin-right: auto;
+    cursor: pointer;
+    filter: grayscale(100%);
+    transition: all .5s ease-in-out; 
+}
+
+#teams img:hover{
+    filter: grayscale(0%);
 }
 
 #team_logo h5{
