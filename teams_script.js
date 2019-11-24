@@ -36,6 +36,7 @@ fetch(teamsAPI,{
         const newH5 = document.createElement('h5');
 
         const logo = document.createElement('img');
+        logo.setAttribute("onerror", "this.onerror=null;this.src='img/favicon.ico'")
 
         logo.addEventListener("click", function () {
             window.location.href = `stronadruzyny.html#${id}`;
@@ -73,7 +74,9 @@ fetch(teamsAPI,{
 
         }else{
             logo.src = image;
+            newH5.innerText = name;
             teamsDiv.appendChild(newDiv).appendChild(logo);
+            newDiv.appendChild(newH5);
         }
         
     });
