@@ -240,3 +240,81 @@ background-color:  rgb(212, 240, 194);
     font-size: 1.25rem;
 
 }
+
+/*-----Players miniatures Begin------*/
+.shirt-wrapper{
+    background-color: var(--slate-gray);
+    width:300px;
+    height: 300px;
+    position: relative;
+  }
+  
+  .left-shirt{
+    display: inline-block;
+    position: relative;
+    top:40px;
+    left:75px;
+    width: 75px;
+    height:220px;
+    background-color: plum;
+  }
+  .left-sleeve{
+    position: relative;
+    top: 13px;
+    left:-45px;
+    width: 75px;
+    height:95px;
+    transform: rotate(45deg);
+    background-color: plum;
+  }
+  .right-shirt{
+    display: inline-block;
+    position: relative; 
+    top:40px;
+    left:70px;
+    width: 75px;
+    height:220px;
+    background-color: blue;
+  }
+  .right-sleeve{
+    position: relative;
+    top: 13px;
+    left:45px;
+    width: 75px;
+    height:95px;
+    transform: rotate(-45deg);
+    background-color: blue;
+  }
+  .collar{
+    position:absolute;
+    top:10px;
+    left:120px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--slate-gray);
+    border-radius: 50%;
+    z-index: 30;
+  }
+  .number{
+  position: absolute;
+  width: 300px;
+  text-align: center;
+  font-size: 80px;
+  top:60px;
+  }
+  .upcoming{
+    transform:scale(0.6)
+  }
+    /*-----Players miniatures End------*/
+    /*-----Players cards Begin-----*/
+  .player-card-title{
+      color: var(--slate-gray);
+      position:relative;
+  }
+  .player-card-body{
+      background-color: white;
+  }*/
+  .player-card{
+   
+  }
+    /*-----Players cards END-----*/
