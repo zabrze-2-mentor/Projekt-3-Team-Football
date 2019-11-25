@@ -39,7 +39,11 @@ fetch(teamsAPI,{
         logo.setAttribute("onerror", "this.onerror=null;this.src='img/favicon.ico'")
 
         logo.addEventListener("click", function () {
+<<<<<<< HEAD
             window.location.href = `team.html#${id}`;
+=======
+            window.location.href = `stronadruzyny.html#${id}`;
+>>>>>>> IK-strona-druzyny
         });
 
         //Szukanie przypadku, kiedy url loga drużyny jest już niedostępne + logika
