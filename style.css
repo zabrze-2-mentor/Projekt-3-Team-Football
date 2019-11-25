@@ -83,7 +83,7 @@ background-color:  rgb(212, 240, 194);
     margin-bottom: 0.5rem !important;
     position: absolute;
     bottom: 0rem;
-    width: 100%;
+  /*  width: 100%;*/
     text-align: center;
     color: white;
 }
@@ -225,13 +225,20 @@ background-color:  rgb(212, 240, 194);
 #teams img{
     height: auto;
     width: auto;
-    max-height: 150px;
+    max-height: 10rem;
+    min-height: 10rem;
     max-width: 10rem;
     margin-bottom: 10px;
     display: block;
     margin-left: auto;
-    margin-right: auto
-    
+    margin-right: auto;
+    cursor: pointer;
+    filter: grayscale(100%);
+    transition: all .5s ease-in-out; 
+}
+
+#teams img:hover{
+    filter: grayscale(0%);
 }
 
 #team_logo h5{

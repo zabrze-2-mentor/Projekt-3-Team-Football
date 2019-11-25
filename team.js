@@ -1,5 +1,9 @@
-const footballApiTeam = "http://api.football-data.org/v2/teams/68"
-const footballApiUpcoming = "https://api.football-data.org/v2/teams/68/matches?status=SCHEDULED"
+
+var leagueId = window.location.hash.slice(1);
+const footballApiTeam = `http://api.football-data.org/v2/teams/${leagueId}`
+const footballApiUpcoming = `https://api.football-data.org/v2/teams/${leagueId}/matches?status=SCHEDULED`
+
+console.log(leagueId)
 
 function getPlayers() {
   fetch(footballApiTeam, {
@@ -18,7 +22,7 @@ function getPlayers() {
         (player.shirtNumber !== null) ? player.shirtNumber: player.shirtNumber = ""
         output +=
           `
-<div class="card player-card col-sm-12 col-md-6 col-xl-4">
+<div class="card player-card  col-sm-12 col-md-6 col-xl-4">
 <div class="card-body player-card-body">
     <h4 class="player-card-title card-title text-center ">${player.name}</h4>
     <div class="d-flex justify-content-center mb-4">
