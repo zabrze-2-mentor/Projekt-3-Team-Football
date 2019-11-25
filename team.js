@@ -1,11 +1,10 @@
-
 var teamId = window.location.hash.slice(1);
-const footballApiTeam = `http://api.football-data.org/v2/teams/${teamId}`
-const footballApiUpcoming = `https://api.football-data.org/v2/teams/${teamId}/matches?status=SCHEDULED`
+let footballApiTeam = `http://api.football-data.org/v2/teams/${teamId}`
+let footballApiUpcoming = `https://api.football-data.org/v2/teams/${teamId}/matches?status=SCHEDULED`
 
 
-function getPlayers() {
-  fetch(footballApiTeam, {
+function getPlayers(Api) {
+  fetch(Api, {
       method: 'GET',
       headers: {
         "X-Auth-Token": "092fb61d449e428885bad32d32adc2b5"
@@ -50,7 +49,7 @@ function getPlayers() {
 </div>
 </div>
 `
-document.getElementById('players').innerHTML =output
+        document.getElementById('players').innerHTML = output
       })
 
     })
@@ -58,11 +57,11 @@ document.getElementById('players').innerHTML =output
       console.log(err)
     })
 }
-getPlayers()
+getPlayers(footballApiTeam)
 
 
-function getUpcomingMatches() {
-  fetch(footballApiUpcoming, {
+function getUpcomingMatches(Api) {
+  fetch(Api, {
       method: 'GET',
       headers: {
         "X-Auth-Token": "092fb61d449e428885bad32d32adc2b5"
@@ -74,13 +73,14 @@ function getUpcomingMatches() {
 
       let tbody = document.getElementById("incomingMatchesTeam");
       data.matches.forEach((match) => {
+   
         let tr = document.createElement("tr");
         let tdHome = document.createElement("td");
         let tdAway = document.createElement("td");
         let tdVS = document.createElement("td");
-        let dateTr=document.createElement("tr")
+        let dateTr = document.createElement("tr")
 
-        tdHome.style.transition = "background-color 2s, color 1s";
+       tdHome.style.transition = "background-color 2s, color 1s";
         tdAway.style.transition = "background-color 2s, color 1s";
 
         tdHome.style.backgroundColor = "var(--dark-tan)";
@@ -94,8 +94,8 @@ function getUpcomingMatches() {
         tdVS.innerText = "-";
         tdHome.innerText = match.homeTeam.name;
         tdAway.innerText = match.awayTeam.name;
-        dateTr.innerHTML=`<td colspan="3">${match.utcDate} : ${match.group} match day:${match.matchday}</td>`
-        
+        dateTr.innerHTML = `<td colspan="3">${match.utcDate} : ${match.group} match day:${match.matchday}</td>`
+
         tr.appendChild(tdHome);
         tr.appendChild(tdVS);
         tr.appendChild(tdAway);
@@ -103,32 +103,41 @@ function getUpcomingMatches() {
         tbody.appendChild(tr);
 
         tdHome.addEventListener("click", function () {
-            window.location.href = `team.html#${match.homeTeam.id}`;
+          window.location.href = `team.html#${match.homeTeam.id}`;
+          footballApiTeam = `http://api.football-data.org/v2/teams/${match.homeTeam.id}`
+          getPlayers(footballApiTeam)
+          footballApiUpcoming = `https://api.football-data.org/v2/teams/${match.homeTeam.id}/matches?status=SCHEDULED`
+          document.getElementById('incomingMatchesTeam').innerHTML =""
+          getUpcomingMatches(footballApiUpcoming)
         });
         tdAway.addEventListener("click", function () {
-            window.location.href = `team.html#${match.awayTeam.id}`;
+          window.location.href = `team.html#${match.awayTeam.id}`;
+          footballApiTeam = `http://api.football-data.org/v2/teams/${match.awayTeam.id}`
+          getPlayers(footballApiTeam)
+          footballApiUpcoming = `https://api.football-data.org/v2/teams/${match.awayTeam.id}/matches?status=SCHEDULED`
+          document.getElementById('incomingMatchesTeam').innerHTML =""
+          getUpcomingMatches(footballApiUpcoming)
         });
 
         tdAway.addEventListener("mouseover", function () {
-            tdAway.style.backgroundColor = "var(--dark-tan)";
-            tdAway.style.color = "black"
+          tdAway.style.backgroundColor = "var(--dark-tan)";
+          tdAway.style.color = "black"
         });
         tdAway.addEventListener("mouseleave", function () {
-            tdAway.style.backgroundColor = "var(--slate-gray)";
-            tdAway.style.color = "white"
+          tdAway.style.backgroundColor = "var(--slate-gray)";
+          tdAway.style.color = "white"
         });
 
         tdHome.addEventListener("mouseover", function () {
-            tdHome.style.backgroundColor = "var(--slate-gray)";
-            tdHome.style.color = "white"
+          tdHome.style.backgroundColor = "var(--slate-gray)";
+          tdHome.style.color = "white"
         });
         tdHome.addEventListener("mouseleave", function () {
-            tdHome.style.backgroundColor = "var(--dark-tan)";
-            tdHome.style.color = "black"
+          tdHome.style.backgroundColor = "var(--dark-tan)";
+          tdHome.style.color = "black"
         });
-       
-       
-        
+
+
       })
     })
     .catch((err) => {
@@ -136,4 +145,4 @@ function getUpcomingMatches() {
     })
 }
 
-getUpcomingMatches()
+getUpcomingMatches(footballApiUpcoming)
