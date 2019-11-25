@@ -25,6 +25,7 @@ fetch(teamsAPI,{
         
         let image = element.team.crestUrl;
         let name = element.team.name;
+        let id = element.team.id;
 
         const teamsDiv = document.getElementById("teams");
 
@@ -35,6 +36,15 @@ fetch(teamsAPI,{
         const newH5 = document.createElement('h5');
 
         const logo = document.createElement('img');
+        logo.setAttribute("onerror", "this.onerror=null;this.src='img/favicon.ico'")
+
+        logo.addEventListener("click", function () {
+<<<<<<< HEAD
+            window.location.href = `team.html#${id}`;
+=======
+            window.location.href = `stronadruzyny.html#${id}`;
+>>>>>>> IK-strona-druzyny
+        });
 
         //Szukanie przypadku, kiedy url loga drużyny jest już niedostępne + logika
         // function urlExists(url, callback) {
@@ -68,7 +78,9 @@ fetch(teamsAPI,{
 
         }else{
             logo.src = image;
+            newH5.innerText = name;
             teamsDiv.appendChild(newDiv).appendChild(logo);
+            newDiv.appendChild(newH5);
         }
         
     });
