@@ -1,5 +1,7 @@
-const footballApiTeam = "http://api.football-data.org/v2/teams/68"
-const footballApiUpcoming = "https://api.football-data.org/v2/teams/68/matches?status=SCHEDULED"
+
+var teamId = window.location.hash.slice(1);
+const footballApiTeam = `http://api.football-data.org/v2/teams/${teamId}`
+const footballApiUpcoming = `https://api.football-data.org/v2/teams/${teamId}/matches?status=SCHEDULED`
 
 function getPlayers() {
   fetch(footballApiTeam, {
