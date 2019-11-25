@@ -1,9 +1,8 @@
 
-var leagueId = window.location.hash.slice(1);
-const footballApiTeam = `http://api.football-data.org/v2/teams/${leagueId}`
-const footballApiUpcoming = `https://api.football-data.org/v2/teams/${leagueId}/matches?status=SCHEDULED`
+var teamId = window.location.hash.slice(1);
+const footballApiTeam = `http://api.football-data.org/v2/teams/${teamId}`
+const footballApiUpcoming = `https://api.football-data.org/v2/teams/${teamId}/matches?status=SCHEDULED`
 
-console.log(leagueId)
 
 function getPlayers() {
   fetch(footballApiTeam, {
@@ -61,7 +60,7 @@ document.getElementById('players').innerHTML =output
 }
 getPlayers()
 
-/* do przerobienia na wyświetlanie w formie tabeli by utrzymać styl ze strony głównej
+
 function getUpcomingMatches() {
   fetch(footballApiUpcoming, {
       method: 'GET',
@@ -72,36 +71,64 @@ function getUpcomingMatches() {
     .then((res) => res.json())
     .then((data) => {
       console.log(data)
-      let output = []
 
-
+      let tbody = document.getElementById("incomingMatchesTeam");
       data.matches.forEach((match) => {
-        output +=
+        let tr = document.createElement("tr");
+        let tdHome = document.createElement("td");
+        let tdAway = document.createElement("td");
+        let tdVS = document.createElement("td");
+        let dateTr=document.createElement("tr")
 
-          `
-      <div class="card col-sm-12 text-center mb-4">
-      <div class="card-header">
-          <h3> ${match.competition.name}</h3>
-          <p>${match.utcDate} : ${match.group} match day:${match.matchday}</p>
-      </div>
-      <div class="card-body d-flex flex-wrap">
-         <div class="col-5">
-          <h6> gospodarze:</h6>
-        <p> ${match.homeTeam.name}</p>
+        tdHome.style.transition = "background-color 2s, color 1s";
+        tdAway.style.transition = "background-color 2s, color 1s";
+
+        tdHome.style.backgroundColor = "var(--dark-tan)";
+        tdAway.style.backgroundColor = "var(--slate-gray)";
+
+        tdAway.style.color = "white"
+
+        tdHome.style.cursor = "pointer";
+        tdAway.style.cursor = "pointer";
+
+        tdVS.innerText = "-";
+        tdHome.innerText = match.homeTeam.name;
+        tdAway.innerText = match.awayTeam.name;
+        dateTr.innerHTML=`<td colspan="3">${match.utcDate} : ${match.group} match day:${match.matchday}</td>`
         
-         </div>
-        <div class="col-2">vs</div>
+        tr.appendChild(tdHome);
+        tr.appendChild(tdVS);
+        tr.appendChild(tdAway);
+        tbody.appendChild(dateTr)
+        tbody.appendChild(tr);
+
+        tdHome.addEventListener("click", function () {
+            window.location.href = `team.html#${match.homeTeam.id}`;
+        });
+        tdAway.addEventListener("click", function () {
+            window.location.href = `team.html#${match.awayTeam.id}`;
+        });
+
+        tdAway.addEventListener("mouseover", function () {
+            tdAway.style.backgroundColor = "var(--dark-tan)";
+            tdAway.style.color = "black"
+        });
+        tdAway.addEventListener("mouseleave", function () {
+            tdAway.style.backgroundColor = "var(--slate-gray)";
+            tdAway.style.color = "white"
+        });
+
+        tdHome.addEventListener("mouseover", function () {
+            tdHome.style.backgroundColor = "var(--slate-gray)";
+            tdHome.style.color = "white"
+        });
+        tdHome.addEventListener("mouseleave", function () {
+            tdHome.style.backgroundColor = "var(--dark-tan)";
+            tdHome.style.color = "black"
+        });
+       
+       
         
-         <div class="col-5">
-         <h6> goście</h6>
-         <p>${match.awayTeam.name}</p>
-         </div>
-      </div>
-
-  </div>
-
-      `
-        document.getElementById('upcomingMatches').innerHTML = output
       })
     })
     .catch((err) => {
@@ -109,4 +136,4 @@ function getUpcomingMatches() {
     })
 }
 
-getUpcomingMatches()*/
+getUpcomingMatches()
