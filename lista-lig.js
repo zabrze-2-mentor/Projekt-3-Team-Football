@@ -110,10 +110,10 @@ async function fetchIncomingMatches(plan = "TIER_ONE") {
         tbody.appendChild(tr);
 
         tdHome.addEventListener("click", function () {
-            window.location.href = `stronadruzyny.html#${element.homeTeam.id}`;
+            window.location.href = `team.html#${element.homeTeam.id}`;
         });
         tdAway.addEventListener("click", function () {
-            window.location.href = `stronadruzyny.html#${element.awayTeam.id}`;
+            window.location.href = `team.html#${element.awayTeam.id}`;
         });
 
         tdAway.addEventListener("mouseover", function () {
