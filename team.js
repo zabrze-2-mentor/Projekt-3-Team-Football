@@ -1,6 +1,8 @@
+
 var teamId = window.location.hash.slice(1);
 let footballApiTeam = `http://api.football-data.org/v2/teams/${teamId}`
 let footballApiUpcoming = `https://api.football-data.org/v2/teams/${teamId}/matches?status=SCHEDULED`
+
 
 
 function getPlayers(Api) {
