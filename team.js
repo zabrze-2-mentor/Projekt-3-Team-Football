@@ -4,9 +4,9 @@ var teamId = window.location.hash.slice(1);
 let footballApiTeam = `http://api.football-data.org/v2/teams/${teamId}`
 let footballApiUpcoming = `https://api.football-data.org/v2/teams/${teamId}/matches?status=SCHEDULED`
 
-
-  fetch(Api, {
 function getPlayers(Api) {
+  fetch(Api, {
+
       method: 'GET',
       headers: {
         "X-Auth-Token": "092fb61d449e428885bad32d32adc2b5"
