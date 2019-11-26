@@ -1,12 +1,10 @@
-
+document.addEventListener('DOMContentLoaded', function () {
 var teamId = window.location.hash.slice(1);
-
 let footballApiTeam = `http://api.football-data.org/v2/teams/${teamId}`
 let footballApiUpcoming = `https://api.football-data.org/v2/teams/${teamId}/matches?status=SCHEDULED`
 
-function getPlayers(Api) {
+function getPlayers(Api, position) {
   fetch(Api, {
-
       method: 'GET',
       headers: {
         "X-Auth-Token": "092fb61d449e428885bad32d32adc2b5"
@@ -14,12 +12,32 @@ function getPlayers(Api) {
     })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
+
       let output = []
+      let positions = []
       let clubColors = data.clubColors.split("/")
       let numberColor = (clubColors[2] != undefined) ? clubColors[2] : "#335145"
-      data.squad.forEach((player) => {
-        (player.shirtNumber !== null) ? player.shirtNumber: player.shirtNumber = ""
+      let sortedData = []
+      if(position=="Coach"){position=null}
+      if (position == "Any") {
+        sortedData = data.squad
+      }else {
+        for (let i = 0; i < data.squad.length; i++) {
+          if (data.squad[i].position == position) {
+            sortedData.push(data.squad[i])
+          }
+        }
+      }
+      console.log(sortedData)
+      console.log(position)
+
+      sortedData.forEach((player) => {
+        (player.shirtNumber !== null) ? player.shirtNumber: player.shirtNumber = "";
+
+        if (!positions.includes(player.position)) {
+          positions.push(player.position)
+        }
+
         output +=
           `
 <div class="  mt-4 col-sm-12 col-md-6 col-xl-4">
@@ -53,16 +71,15 @@ function getPlayers(Api) {
 </div>
 </div>
 `
+
         document.getElementById('players').innerHTML = output
       })
-
     })
     .catch((err) => {
       console.log(err)
     })
 }
-getPlayers(footballApiTeam)
-
+getPlayers(footballApiTeam,"Any")
 
 function getUpcomingMatches(Api) {
   fetch(Api, {
@@ -77,14 +94,14 @@ function getUpcomingMatches(Api) {
 
       let tbody = document.getElementById("incomingMatchesTeam");
       data.matches.forEach((match) => {
-   
+
         let tr = document.createElement("tr");
         let tdHome = document.createElement("td");
         let tdAway = document.createElement("td");
         let tdVS = document.createElement("td");
         let dateTr = document.createElement("tr")
 
-       tdHome.style.transition = "background-color 2s, color 1s";
+        tdHome.style.transition = "background-color 2s, color 1s";
         tdAway.style.transition = "background-color 2s, color 1s";
 
         tdHome.style.backgroundColor = "var(--dark-tan)";
@@ -109,17 +126,17 @@ function getUpcomingMatches(Api) {
         tdHome.addEventListener("click", function () {
           window.location.href = `team.html#${match.homeTeam.id}`;
           footballApiTeam = `http://api.football-data.org/v2/teams/${match.homeTeam.id}`
-          getPlayers(footballApiTeam)
+          getPlayers(footballApiTeam,"any")
           footballApiUpcoming = `https://api.football-data.org/v2/teams/${match.homeTeam.id}/matches?status=SCHEDULED`
-          document.getElementById('incomingMatchesTeam').innerHTML =""
+          document.getElementById('incomingMatchesTeam').innerHTML = ""
           getUpcomingMatches(footballApiUpcoming)
         });
         tdAway.addEventListener("click", function () {
           window.location.href = `team.html#${match.awayTeam.id}`;
           footballApiTeam = `http://api.football-data.org/v2/teams/${match.awayTeam.id}`
-          getPlayers(footballApiTeam)
+          getPlayers(footballApiTeam,"any")
           footballApiUpcoming = `https://api.football-data.org/v2/teams/${match.awayTeam.id}/matches?status=SCHEDULED`
-          document.getElementById('incomingMatchesTeam').innerHTML =""
+          document.getElementById('incomingMatchesTeam').innerHTML = ""
           getUpcomingMatches(footballApiUpcoming)
         });
 
@@ -148,5 +165,14 @@ function getUpcomingMatches(Api) {
       console.log(err)
     })
 }
-
 getUpcomingMatches(footballApiUpcoming)
+
+
+var sortButtons=document.querySelectorAll(".btn-sort-players")
+sortButtons.forEach(btn=>{
+  btn.addEventListener("click" , function(){getPlayers(footballApiTeam,btn.innerHTML)})
+})
+
+
+
+});
