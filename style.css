@@ -83,7 +83,7 @@ background-color:  rgb(212, 240, 194);
     margin-bottom: 0.5rem !important;
     position: absolute;
     bottom: 0rem;
-  /*  width: 100%;*/
+   width: 100%;
     text-align: center;
     color: white;
 }
@@ -360,3 +360,6 @@ background-color:  rgb(212, 240, 194);
    
   }
     /*-----Players cards END-----*/
+#incomingMatchesTeam tr:nth-child(2n+1){
+    text-align: center;
+}

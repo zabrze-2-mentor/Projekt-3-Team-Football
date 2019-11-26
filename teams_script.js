@@ -39,7 +39,9 @@ fetch(teamsAPI,{
         logo.setAttribute("onerror", "this.onerror=null;this.src='img/favicon.ico'")
 
         logo.addEventListener("click", function () {
+
             window.location.href = `team.html#${id}`;
+
         });
 
         

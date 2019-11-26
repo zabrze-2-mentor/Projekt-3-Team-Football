@@ -1,9 +1,12 @@
 
 var teamId = window.location.hash.slice(1);
-const footballApiTeam = `http://api.football-data.org/v2/teams/${teamId}`
-const footballApiUpcoming = `https://api.football-data.org/v2/teams/${teamId}/matches?status=SCHEDULED`
-function getPlayers() {
-  fetch(footballApiTeam, {
+
+let footballApiTeam = `http://api.football-data.org/v2/teams/${teamId}`
+let footballApiUpcoming = `https://api.football-data.org/v2/teams/${teamId}/matches?status=SCHEDULED`
+
+
+  fetch(Api, {
+function getPlayers(Api) {
       method: 'GET',
       headers: {
         "X-Auth-Token": "092fb61d449e428885bad32d32adc2b5"
@@ -19,7 +22,8 @@ function getPlayers() {
         (player.shirtNumber !== null) ? player.shirtNumber: player.shirtNumber = ""
         output +=
           `
-<div class="card player-card  col-sm-12 col-md-6 col-xl-4">
+<div class="  mt-4 col-sm-12 col-md-6 col-xl-4">
+<div class="card player-card>
 <div class="card-body player-card-body">
     <h4 class="player-card-title card-title text-center ">${player.name}</h4>
     <div class="d-flex justify-content-center mb-4">
@@ -47,8 +51,9 @@ function getPlayers() {
     </ul>
 </div>
 </div>
+</div>
 `
-document.getElementById('players').innerHTML =output
+        document.getElementById('players').innerHTML = output
       })
 
     })
@@ -56,11 +61,11 @@ document.getElementById('players').innerHTML =output
       console.log(err)
     })
 }
-getPlayers()
+getPlayers(footballApiTeam)
 
-/* do przerobienia na wyświetlanie w formie tabeli by utrzymać styl ze strony głównej
-function getUpcomingMatches() {
-  fetch(footballApiUpcoming, {
+
+function getUpcomingMatches(Api) {
+  fetch(Api, {
       method: 'GET',
       headers: {
         "X-Auth-Token": "092fb61d449e428885bad32d32adc2b5"
@@ -69,36 +74,74 @@ function getUpcomingMatches() {
     .then((res) => res.json())
     .then((data) => {
       console.log(data)
-      let output = []
 
-
+      let tbody = document.getElementById("incomingMatchesTeam");
       data.matches.forEach((match) => {
-        output +=
+   
+        let tr = document.createElement("tr");
+        let tdHome = document.createElement("td");
+        let tdAway = document.createElement("td");
+        let tdVS = document.createElement("td");
+        let dateTr = document.createElement("tr")
 
-          `
-      <div class="card col-sm-12 text-center mb-4">
-      <div class="card-header">
-          <h3> ${match.competition.name}</h3>
-          <p>${match.utcDate} : ${match.group} match day:${match.matchday}</p>
-      </div>
-      <div class="card-body d-flex flex-wrap">
-         <div class="col-5">
-          <h6> gospodarze:</h6>
-        <p> ${match.homeTeam.name}</p>
-        
-         </div>
-        <div class="col-2">vs</div>
-        
-         <div class="col-5">
-         <h6> goście</h6>
-         <p>${match.awayTeam.name}</p>
-         </div>
-      </div>
+       tdHome.style.transition = "background-color 2s, color 1s";
+        tdAway.style.transition = "background-color 2s, color 1s";
 
-  </div>
+        tdHome.style.backgroundColor = "var(--dark-tan)";
+        tdAway.style.backgroundColor = "var(--slate-gray)";
 
-      `
-        document.getElementById('upcomingMatches').innerHTML = output
+        tdAway.style.color = "white"
+
+        tdHome.style.cursor = "pointer";
+        tdAway.style.cursor = "pointer";
+
+        tdVS.innerText = "-";
+        tdHome.innerText = match.homeTeam.name;
+        tdAway.innerText = match.awayTeam.name;
+        dateTr.innerHTML = `<td colspan="3">${match.utcDate} : ${match.group} match day:${match.matchday}</td>`
+
+        tr.appendChild(tdHome);
+        tr.appendChild(tdVS);
+        tr.appendChild(tdAway);
+        tbody.appendChild(dateTr)
+        tbody.appendChild(tr);
+
+        tdHome.addEventListener("click", function () {
+          window.location.href = `team.html#${match.homeTeam.id}`;
+          footballApiTeam = `http://api.football-data.org/v2/teams/${match.homeTeam.id}`
+          getPlayers(footballApiTeam)
+          footballApiUpcoming = `https://api.football-data.org/v2/teams/${match.homeTeam.id}/matches?status=SCHEDULED`
+          document.getElementById('incomingMatchesTeam').innerHTML =""
+          getUpcomingMatches(footballApiUpcoming)
+        });
+        tdAway.addEventListener("click", function () {
+          window.location.href = `team.html#${match.awayTeam.id}`;
+          footballApiTeam = `http://api.football-data.org/v2/teams/${match.awayTeam.id}`
+          getPlayers(footballApiTeam)
+          footballApiUpcoming = `https://api.football-data.org/v2/teams/${match.awayTeam.id}/matches?status=SCHEDULED`
+          document.getElementById('incomingMatchesTeam').innerHTML =""
+          getUpcomingMatches(footballApiUpcoming)
+        });
+
+        tdAway.addEventListener("mouseover", function () {
+          tdAway.style.backgroundColor = "var(--dark-tan)";
+          tdAway.style.color = "black"
+        });
+        tdAway.addEventListener("mouseleave", function () {
+          tdAway.style.backgroundColor = "var(--slate-gray)";
+          tdAway.style.color = "white"
+        });
+
+        tdHome.addEventListener("mouseover", function () {
+          tdHome.style.backgroundColor = "var(--slate-gray)";
+          tdHome.style.color = "white"
+        });
+        tdHome.addEventListener("mouseleave", function () {
+          tdHome.style.backgroundColor = "var(--dark-tan)";
+          tdHome.style.color = "black"
+        });
+
+
       })
     })
     .catch((err) => {
@@ -106,4 +149,4 @@ function getUpcomingMatches() {
     })
 }
 
-getUpcomingMatches()*/
+getUpcomingMatches(footballApiUpcoming)
