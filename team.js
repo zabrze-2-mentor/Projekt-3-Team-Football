@@ -20,7 +20,8 @@ function getPlayers(Api) {
         (player.shirtNumber !== null) ? player.shirtNumber: player.shirtNumber = ""
         output +=
           `
-<div class="card player-card  col-sm-12 col-md-6 col-xl-4">
+<div class="  mt-4 col-sm-12 col-md-6 col-xl-4">
+<div class="card player-card>
 <div class="card-body player-card-body">
     <h4 class="player-card-title card-title text-center ">${player.name}</h4>
     <div class="d-flex justify-content-center mb-4">
@@ -46,6 +47,7 @@ function getPlayers(Api) {
         <li class="list-group-item">ID:${player.id}</li>
 
     </ul>
+</div>
 </div>
 </div>
 `
