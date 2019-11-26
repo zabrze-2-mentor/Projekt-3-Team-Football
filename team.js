@@ -126,7 +126,7 @@ function getUpcomingMatches(Api) {
         tdHome.addEventListener("click", function () {
           window.location.href = `team.html#${match.homeTeam.id}`;
           footballApiTeam = `http://api.football-data.org/v2/teams/${match.homeTeam.id}`
-          getPlayers(footballApiTeam,"any")
+          getPlayers(footballApiTeam,"Any")
           footballApiUpcoming = `https://api.football-data.org/v2/teams/${match.homeTeam.id}/matches?status=SCHEDULED`
           document.getElementById('incomingMatchesTeam').innerHTML = ""
           getUpcomingMatches(footballApiUpcoming)
@@ -134,7 +134,7 @@ function getUpcomingMatches(Api) {
         tdAway.addEventListener("click", function () {
           window.location.href = `team.html#${match.awayTeam.id}`;
           footballApiTeam = `http://api.football-data.org/v2/teams/${match.awayTeam.id}`
-          getPlayers(footballApiTeam,"any")
+          getPlayers(footballApiTeam,"Any")
           footballApiUpcoming = `https://api.football-data.org/v2/teams/${match.awayTeam.id}/matches?status=SCHEDULED`
           document.getElementById('incomingMatchesTeam').innerHTML = ""
           getUpcomingMatches(footballApiUpcoming)
