@@ -1,46 +1,26 @@
 document.addEventListener('DOMContentLoaded', function () {
-var teamId = window.location.hash.slice(1);
-let footballApiTeam = `http://api.football-data.org/v2/teams/${teamId}`
-let footballApiUpcoming = `https://api.football-data.org/v2/teams/${teamId}/matches?status=SCHEDULED`
+  var teamId = window.location.hash.slice(1);
+  let footballApiTeam = `http://api.football-data.org/v2/teams/${teamId}`
+  let footballApiUpcoming = `https://api.football-data.org/v2/teams/${teamId}/matches?status=SCHEDULED`
 
-function getPlayers(Api, position) {
-  fetch(Api, {
-      method: 'GET',
-      headers: {
-        "X-Auth-Token": "092fb61d449e428885bad32d32adc2b5"
-      }
-    })
-    .then((res) => res.json())
-    .then((data) => {
-
-      let output = []
-      let positions = []
-      let clubColors = data.clubColors.split("/")
-      let numberColor = (clubColors[2] != undefined) ? clubColors[2] : "#335145"
-      let sortedData = []
-      if(position=="Coach"){position=null}
-      if (position == "Any") {
-        sortedData = data.squad
-      }else {
-        for (let i = 0; i < data.squad.length; i++) {
-          if (data.squad[i].position == position) {
-            sortedData.push(data.squad[i])
-          }
+  function getPlayers(Api) {
+    fetch(Api, {
+        method: 'GET',
+        headers: {
+          "X-Auth-Token": "092fb61d449e428885bad32d32adc2b5"
         }
-      }
-      console.log(sortedData)
-      console.log(position)
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        let output = []
+        let clubColors = data.clubColors.split("/")
+        let numberColor = (clubColors[2] != undefined) ? clubColors[2] : "#335145"
+        data.squad.forEach((player) => {
+          (player.shirtNumber !== null) ? player.shirtNumber: player.shirtNumber = "";
 
-      sortedData.forEach((player) => {
-        (player.shirtNumber !== null) ? player.shirtNumber: player.shirtNumber = "";
-
-        if (!positions.includes(player.position)) {
-          positions.push(player.position)
-        }
-
-        output +=
-          `
-<div class="  mt-4 col-sm-12 col-md-6 col-xl-4">
+          output +=
+            `
+<div class="mt-4 col-sm-12 col-md-6 col-xl-4 sort-player ${player.position}">
 <div class="card player-card>
 <div class="card-body player-card-body">
     <h4 class="player-card-title card-title text-center ">${player.name}</h4>
@@ -61,7 +41,7 @@ function getPlayers(Api, position) {
         <li class="list-group-item">Date of birth:${player.dateOfBirth} </li>
         <li class="list-group-item">Country of birth:${player.countryOfBirth}</li>
         <li class="list-group-item">Nationality:${player.nationality}</li>
-        <li class="list-group-item">Position:${player.position}</li>
+        <li class="list-group-item ">Position: ${player.position}</li>
         <li class="list-group-item">Role:${player.role}</li>
         <li class="list-group-item">Shirt number:${player.shirtNumber}</li>
         <li class="list-group-item">ID:${player.id}</li>
@@ -71,108 +51,116 @@ function getPlayers(Api, position) {
 </div>
 </div>
 `
-
-        document.getElementById('players').innerHTML = output
+          document.getElementById('players').innerHTML = output
+        })
       })
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
-getPlayers(footballApiTeam,"Any")
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+  getPlayers(footballApiTeam)
 
-function getUpcomingMatches(Api) {
-  fetch(Api, {
-      method: 'GET',
-      headers: {
-        "X-Auth-Token": "092fb61d449e428885bad32d32adc2b5"
+  function getUpcomingMatches(Api) {
+    fetch(Api, {
+        method: 'GET',
+        headers: {
+          "X-Auth-Token": "092fb61d449e428885bad32d32adc2b5"
+        }
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        window.scrollTo(0,0)
+        let tbody = document.getElementById("incomingMatchesTeam");
+        data.matches.forEach((match) => {
+
+          let tr = document.createElement("tr");
+          let tdHome = document.createElement("td");
+          let tdAway = document.createElement("td");
+          let tdVS = document.createElement("td");
+          let dateTr = document.createElement("tr")
+
+          tdHome.style.transition = "background-color 2s, color 1s";
+          tdAway.style.transition = "background-color 2s, color 1s";
+
+          tdHome.style.backgroundColor = "var(--dark-tan)";
+          tdAway.style.backgroundColor = "var(--slate-gray)";
+
+          tdAway.style.color = "white"
+
+          tdHome.style.cursor = "pointer";
+          tdAway.style.cursor = "pointer";
+
+          tdVS.innerText = "-";
+          tdHome.innerText = match.homeTeam.name;
+          tdAway.innerText = match.awayTeam.name;
+          dateTr.innerHTML = `<td colspan="3">${match.utcDate} : ${match.group} match day:${match.matchday}</td>`
+
+          tr.appendChild(tdHome);
+          tr.appendChild(tdVS);
+          tr.appendChild(tdAway);
+          tbody.appendChild(dateTr)
+          tbody.appendChild(tr);
+
+          tdHome.addEventListener("click", function () {
+            window.location.href = `team.html#${match.homeTeam.id}`;
+            footballApiTeam = `http://api.football-data.org/v2/teams/${match.homeTeam.id}`
+            getPlayers(footballApiTeam, "Any")
+            footballApiUpcoming = `https://api.football-data.org/v2/teams/${match.homeTeam.id}/matches?status=SCHEDULED`
+            document.getElementById('incomingMatchesTeam').innerHTML = ""
+            getUpcomingMatches(footballApiUpcoming)
+          });
+          tdAway.addEventListener("click", function () {
+            window.location.href = `team.html#${match.awayTeam.id}`;
+            footballApiTeam = `http://api.football-data.org/v2/teams/${match.awayTeam.id}`
+            getPlayers(footballApiTeam, "Any")
+            footballApiUpcoming = `https://api.football-data.org/v2/teams/${match.awayTeam.id}/matches?status=SCHEDULED`
+            document.getElementById('incomingMatchesTeam').innerHTML = ""
+            getUpcomingMatches(footballApiUpcoming)
+          });
+
+          tdAway.addEventListener("mouseover", function () {
+            tdAway.style.backgroundColor = "var(--dark-tan)";
+            tdAway.style.color = "black"
+          });
+          tdAway.addEventListener("mouseleave", function () {
+            tdAway.style.backgroundColor = "var(--slate-gray)";
+            tdAway.style.color = "white"
+          });
+
+          tdHome.addEventListener("mouseover", function () {
+            tdHome.style.backgroundColor = "var(--slate-gray)";
+            tdHome.style.color = "white"
+          });
+          tdHome.addEventListener("mouseleave", function () {
+            tdHome.style.backgroundColor = "var(--dark-tan)";
+            tdHome.style.color = "black"
+          });
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+  getUpcomingMatches(footballApiUpcoming)
+
+  function sortPlayers(position) {
+    if (position == "Coach") {
+      position = null
+    }
+    let positions = document.querySelectorAll('.sort-player')
+    positions.forEach((player) => {
+      (!player.classList.contains(position)) ? player.style.display = "none": player.style.display = "block"
+      if (position == "Any") {
+        player.style.display = "block"
       }
     })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data)
+  }
 
-      let tbody = document.getElementById("incomingMatchesTeam");
-      data.matches.forEach((match) => {
-
-        let tr = document.createElement("tr");
-        let tdHome = document.createElement("td");
-        let tdAway = document.createElement("td");
-        let tdVS = document.createElement("td");
-        let dateTr = document.createElement("tr")
-
-        tdHome.style.transition = "background-color 2s, color 1s";
-        tdAway.style.transition = "background-color 2s, color 1s";
-
-        tdHome.style.backgroundColor = "var(--dark-tan)";
-        tdAway.style.backgroundColor = "var(--slate-gray)";
-
-        tdAway.style.color = "white"
-
-        tdHome.style.cursor = "pointer";
-        tdAway.style.cursor = "pointer";
-
-        tdVS.innerText = "-";
-        tdHome.innerText = match.homeTeam.name;
-        tdAway.innerText = match.awayTeam.name;
-        dateTr.innerHTML = `<td colspan="3">${match.utcDate} : ${match.group} match day:${match.matchday}</td>`
-
-        tr.appendChild(tdHome);
-        tr.appendChild(tdVS);
-        tr.appendChild(tdAway);
-        tbody.appendChild(dateTr)
-        tbody.appendChild(tr);
-
-        tdHome.addEventListener("click", function () {
-          window.location.href = `team.html#${match.homeTeam.id}`;
-          footballApiTeam = `http://api.football-data.org/v2/teams/${match.homeTeam.id}`
-          getPlayers(footballApiTeam,"Any")
-          footballApiUpcoming = `https://api.football-data.org/v2/teams/${match.homeTeam.id}/matches?status=SCHEDULED`
-          document.getElementById('incomingMatchesTeam').innerHTML = ""
-          getUpcomingMatches(footballApiUpcoming)
-        });
-        tdAway.addEventListener("click", function () {
-          window.location.href = `team.html#${match.awayTeam.id}`;
-          footballApiTeam = `http://api.football-data.org/v2/teams/${match.awayTeam.id}`
-          getPlayers(footballApiTeam,"Any")
-          footballApiUpcoming = `https://api.football-data.org/v2/teams/${match.awayTeam.id}/matches?status=SCHEDULED`
-          document.getElementById('incomingMatchesTeam').innerHTML = ""
-          getUpcomingMatches(footballApiUpcoming)
-        });
-
-        tdAway.addEventListener("mouseover", function () {
-          tdAway.style.backgroundColor = "var(--dark-tan)";
-          tdAway.style.color = "black"
-        });
-        tdAway.addEventListener("mouseleave", function () {
-          tdAway.style.backgroundColor = "var(--slate-gray)";
-          tdAway.style.color = "white"
-        });
-
-        tdHome.addEventListener("mouseover", function () {
-          tdHome.style.backgroundColor = "var(--slate-gray)";
-          tdHome.style.color = "white"
-        });
-        tdHome.addEventListener("mouseleave", function () {
-          tdHome.style.backgroundColor = "var(--dark-tan)";
-          tdHome.style.color = "black"
-        });
-
-
-      })
+  let sortButtons = document.querySelectorAll(".btn-sort-players")
+  sortButtons.forEach(btn => {
+    btn.addEventListener("click", function () {
+      sortPlayers(btn.innerHTML)
     })
-    .catch((err) => {
-      console.log(err)
-    })
-}
-getUpcomingMatches(footballApiUpcoming)
-
-
-var sortButtons=document.querySelectorAll(".btn-sort-players")
-sortButtons.forEach(btn=>{
-  btn.addEventListener("click" , function(){getPlayers(footballApiTeam,btn.innerHTML)})
-})
-
-
+  })
 
 });
