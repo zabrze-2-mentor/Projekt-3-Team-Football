@@ -1,13 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
-  var teamId = window.location.hash.slice(1);
-  let footballApiTeam = `http://api.football-data.org/v2/teams/${teamId}`
-  let footballApiUpcoming = `https://api.football-data.org/v2/teams/${teamId}/matches?status=SCHEDULED`
-
+  let teamId = window.location.hash.slice(1);
+  let defaultTeamId='18'
+  let footballApiTeam = `http://api.football-data.org/v2/teams/${(teamId)?teamId:defaultTeamId}/`
+  let footballApiUpcoming = `https://api.football-data.org/v2/teams/${(teamId)?teamId:defaultTeamId}/matches?status=SCHEDULED`
+  const apiToken1="092fb61d449e428885bad32d32adc2b5"
+  const apiToken2="047e205edf9b4f9ca936e701a14621b2"
   function getPlayers(Api) {
     fetch(Api, {
         method: 'GET',
         headers: {
-          "X-Auth-Token": "092fb61d449e428885bad32d32adc2b5"
+          "X-Auth-Token": apiToken1
         }
       })
       .then((res) => res.json())
@@ -20,36 +22,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
           output +=
             `
-<div class="mt-4 col-sm-12 col-md-6 col-xl-4 sort-player ${player.position}">
-<div class="card player-card>
-<div class="card-body player-card-body">
-    <h4 class="player-card-title card-title text-center ">${player.name}</h4>
-    <div class="d-flex justify-content-center mb-4">
-        <div class="shirt-wrapper">
-            <div class="left-shirt" style="background-color:${clubColors[0]};">
-                <div class="left-sleeve" style="background-color:${clubColors[0]};"></div>
+            <div class="mt-4 col-sm-12 col-md-6 col-xl-4 sort-player ${player.position}">
+            <div class="card player-card>
+            <div class=" card-body player-card-body">
+                <h4 class="player-card-title card-title text-center ">${player.name}</h4>
+                <div class="d-flex justify-content-center mb-4">
+                    <div class="shirt-wrapper">
+                        <div class="left-shirt" style="background-color:${clubColors[0]};">
+                            <div class="left-sleeve" style="background-color:${clubColors[0]};"></div>
+                        </div>
+    
+                        <div class="collar"></div>
+                        <div class="right-shirt" style="background-color:${clubColors[1]};">
+                            <div class="right-sleeve" style="background-color:${clubColors[1]};"></div>
+                        </div>
+                        <div class="number" style="color:${numberColor}">${player.shirtNumber}</div>
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Date of birth:${player.dateOfBirth} </li>
+                    <li class="list-group-item">Country of birth:${player.countryOfBirth}</li>
+                    <li class="list-group-item">Nationality:${player.nationality}</li>
+                    <li class="list-group-item ">Position: ${player.position}</li>
+                    <li class="list-group-item">Role:${player.role}</li>
+                    <li class="list-group-item">Shirt number:${player.shirtNumber}</li>
+                    <li class="list-group-item">ID:${player.id}</li>
+    
+                </ul>
             </div>
-
-            <div class="collar"></div>
-            <div class="right-shirt" style="background-color:${clubColors[1]};">
-                <div class="right-sleeve" style="background-color:${clubColors[1]};"></div>
-            </div>
-            <div class="number" style="color:${numberColor}">${player.shirtNumber}</div>
         </div>
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">Date of birth:${player.dateOfBirth} </li>
-        <li class="list-group-item">Country of birth:${player.countryOfBirth}</li>
-        <li class="list-group-item">Nationality:${player.nationality}</li>
-        <li class="list-group-item ">Position: ${player.position}</li>
-        <li class="list-group-item">Role:${player.role}</li>
-        <li class="list-group-item">Shirt number:${player.shirtNumber}</li>
-        <li class="list-group-item">ID:${player.id}</li>
-
-    </ul>
-</div>
-</div>
-</div>
 `
           document.getElementById('players').innerHTML = output
         })
@@ -64,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch(Api, {
         method: 'GET',
         headers: {
-          "X-Auth-Token": "092fb61d449e428885bad32d32adc2b5"
+          "X-Auth-Token": apiToken2
         }
       })
       .then((res) => res.json())

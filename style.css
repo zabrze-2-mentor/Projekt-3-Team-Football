@@ -356,9 +356,6 @@ background-color:  rgb(212, 240, 194);
   .player-card-body{
       background-color: white;
   }*/
-  .player-card{
-   
-  }
     /*-----Players cards END-----*/
 #incomingMatchesTeam tr:nth-child(2n+1){
     text-align: center;
