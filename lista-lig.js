@@ -76,7 +76,7 @@ async function fetchIncomingMatches(plan = "TIER_ONE") {
 
     let tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow = tomorrow.getFullYear() + '-' + (tomorrow.getMonth() + 1) + '-' + ((tomorrow.getDate().length<2) ? "0" + tomorrow.getDate() : tomorrow.getDate());
+    tomorrow = tomorrow.getFullYear() + '-' + (tomorrow.getMonth() + 1) + '-' + ( "0" + tomorrow.getDate()).slice(-2);
     let response = await fetchFromAPI(`http://api.football-data.org/v2/matches?dateFrom=${tomorrow}&dateTo=${tomorrow}&status=SCHEDULED`,authToken);
     document.getElementById("tblData").innerText = tomorrow;
     let tbody = document.getElementById("incomingMatchesFP");
